@@ -9,6 +9,7 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>war</packaging>
 	<groupId>de.awacademy</groupId>
 	<artifactId>spring-boot-webblog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -71,6 +72,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
