@@ -13,19 +13,19 @@ services:
     ports: 
       - 3306:3306
     expose:
-        3306
+      - 3306
     networks:
         - miniprojekt
       
-    tomcat:
-        image: tomcat:latest
-        container_name: tomcat
-        environment:
-            -TOMCAT_USERNSME=admin
-            -TOMCAT_PASSWORT=admin
-        ports: 
-            -8787:8080
-        expose: 
-            8787
-        networks:
-            - miniprojekt
+  tomcat:
+      image: tomcat:latest
+      container_name: tomcat
+      environment:
+          - TOMCAT_USERNSME=admin
+          - TOMCAT_PASSWORT=admin
+      ports: 
+          - 8787:8080
+      expose: 
+          - 8787
+      networks:
+          - miniprojekt
