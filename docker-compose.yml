@@ -14,7 +14,7 @@ services:
       - 3306:3306
     expose:
         3306
-    network:
+    networks:
         - miniprojekt
       
     tomcat:
@@ -27,5 +27,5 @@ services:
             -8787:8080
         expose: 
             8787
-        network:
+        networks:
             - miniprojekt
