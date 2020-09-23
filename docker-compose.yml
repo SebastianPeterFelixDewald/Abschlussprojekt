@@ -1,0 +1,31 @@
+version: '3.8'
+networks:
+        miniprojekt:
+            driver: bridge
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root
+      #- MYSQL_DATABASE=db_blog
+      - MYSQL_USER=root
+    ports: 
+      - 3306:3306
+    expose:
+        3306
+    network:
+        - miniprojekt
+      
+    tomcat:
+        image: tomcat:latest
+        container_name: tomcat
+        environment:
+            -TOMCAT_USERNSME=admin
+            -TOMCAT_PASSWORT=admin
+        ports: 
+            -8787:8080
+        expose: 
+            8787
+        network:
+            - miniprojekt
