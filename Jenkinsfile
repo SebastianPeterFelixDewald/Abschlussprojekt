@@ -15,6 +15,7 @@ pipeline {
                         }
                     }
                 steps {
+                        sleep (4)
                         sh 'mvn clean package'
                 }
             }
