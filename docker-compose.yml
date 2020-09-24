@@ -2,6 +2,7 @@ version: '3.8'
 networks:
   miniprojekt:
       driver: bridge
+      name: miniprojekt
 services:
   mysql:
     image: mysql:latest
