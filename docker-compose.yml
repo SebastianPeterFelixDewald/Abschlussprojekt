@@ -9,7 +9,6 @@ services:
     container_name: mysql
     environment: 
       - MYSQL_ROOT_PASSWORD=root
-      #- MYSQL_DATABASE=db_blog
       - MYSQL_USER=root
     ports: 
       - 3306:3306
@@ -22,7 +21,7 @@ services:
       image: tomcat:latest
       container_name: tomcat
       environment:
-          - TOMCAT_USERNSME=admin
+          - TOMCAT_USERNAME=admin
           - TOMCAT_PASSWORT=admin
       ports: 
           - 8787:8080
