@@ -1,7 +1,6 @@
 
 - name: name of playbook
   hosts: all
-  connection: docker
   tasks:
   - name: Copy WAR-file from Jenkins to tomcat
     copy:
