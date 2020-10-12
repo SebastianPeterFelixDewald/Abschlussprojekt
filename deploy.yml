@@ -1,20 +1,9 @@
-- name: Deploy WAR File to tomcat
-  hosts: cont
+- name: name of playbook
+  hosts: all
   connection: docker
   tasks:
-    - name: Copy Webblog from Nexus to Tomcat
-      local_action:
-        module: community.general.maven_artifact
-        group_id: de.awacademy
-        artifact_id: webblog
-        #version: 0.0.1-SNAPSHOT
-        extension: war
-        repository_url: http://nexus:8081/repository/maven-snapshots/
-        #dest: /var/jenkins_home/
-        dest: /usr/local/tomcat/webapps/webblog.war
-
-    - name: Copy Webblog WAR File to Tomcat
-      copy:
-       src:  /var/jenkins_home/webblog.war
-       dest: /usr/local/tomcat/webapps/
-       mode: 0755
+  - name: Copy WAR-file from Jenkins to tomcat
+    copy:
+      src: /var/jenkins_home/workspace/miniprojekt_develop@2/target/spring-boot-webblog-0.0.1-SNAPSHOT.war
+      dest: /usr/local/tomcat/webapps
+      mode: '0644'
