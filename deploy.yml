@@ -4,8 +4,6 @@
   tasks:
   - name: Copy WAR-file from Jenkins to tomcat
     copy:
-      src: http://localhost:8083/repository/maven-snapshots/de/awacademy/spring-boot-webblog/0.0.1-SNAPSHOT/spring-boot-webblog-0.0.1-20201013.125104-8.war
+      src: /var/jenkins_home/workspace/miniprojekt/target/spring-boot-webblog-0.0.1-SNAPSHOT.war
       dest: /usr/local/tomcat/webapps
       mode: '0644'
-
-      
