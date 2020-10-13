@@ -11,9 +11,9 @@
 	</parent>
 	<packaging>war</packaging>
 	<groupId>de.awacademy</groupId>
-	<artifactId>spring-boot-webblog</artifactId>
+	<artifactId>gryns_webblog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-webblog</name>
+	<name>gryns_webblog</name>
 	<description>Spring Boot Webblog Project</description>
 
 	<properties>
@@ -68,6 +68,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>gryns_webblog</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
