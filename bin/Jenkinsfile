@@ -3,12 +3,12 @@ pipeline {
         stages {
             stage('Testen und Kompilieren') {
                 steps {
-                    sh 'mvn test' 
+                    sh 
                 }
             }
             stage("WAR-File erstellen") {
                 steps {
-                    sh 'mvn clean package -DskipTest'
+                        sh 'mvn clean package'
                 }
             }
         

@@ -1,0 +1,4 @@
+[tomcat]
+tomcat
+[tomcat:vars]
+ansible_connection=docker
