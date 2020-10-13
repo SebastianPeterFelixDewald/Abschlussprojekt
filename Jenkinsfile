@@ -8,6 +8,11 @@ pipeline {
                     sh 'mvn clean test' 
                 }
             }
+           stage('Sonar Verify') {
+                configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
+                    sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS clean verify sonar:sonar'
+                }
+            }
             stage('WAR-File erstellen') {
                 steps {
                     sh 'mvn clean package -DskipTests'
