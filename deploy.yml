@@ -15,3 +15,5 @@
       src: /var/jenkins_home/gryns_webblog.war
       dest: /usr/local/tomcat/webapps
       mode: '0644'
+
+      
