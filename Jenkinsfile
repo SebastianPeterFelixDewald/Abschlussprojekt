@@ -24,7 +24,7 @@ pipeline {
         stage('deploy to Nexus') {
             steps {
             withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
-            configFileProvider([configFile(fileId: 'sevcansettings', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
+            configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
                      sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS clean deploy'      
                     }
                 }
