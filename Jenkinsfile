@@ -30,5 +30,11 @@ pipeline {
                 }
             }
         }
+        stage('Deploy War File to Local Tomcat') {
+            steps {
+                ansiblePlaybook inventory: 'inventory', colorized: true, installation: 'ansible2', playbook: 'deploy.yml', disableHostKeyChecking: true
+                ansiblePlaybook inventory: 'inventory', colorized: true, installation: 'ansible2', playbook: 'remove.yml', disableHostKeyChecking: true
+            }
+        }
         }
     }
