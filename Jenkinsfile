@@ -12,10 +12,10 @@ pipeline {
                     sh 'ls -al target'
                 }
             }
-            stage('package and deploy to nexus') {
+            stage('package to nexus') {
                 steps {
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh 'mvn deploy'
+                        sh 'mvn package'
                     }
                 }
             }
