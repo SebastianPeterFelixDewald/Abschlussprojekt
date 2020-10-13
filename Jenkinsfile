@@ -30,11 +30,5 @@ pipeline {
                 }
             }
         }
-        stage('nexus war-file pull') {
-            steps {
-        	    sh 'curl -O -v http://nexus:8081/nexus/content/repositories/maven-snapshots/de.awacademy/spring-boot-webblog/0.0.1/spring-boot-webblog-0.1.1-SNAPSHOT.war'
-                sh 'ls -al'
-        	    }
-            }
     }
 }
