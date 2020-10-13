@@ -1,6 +1,8 @@
 pipeline {
+
     agent any
     environment {
+        
         NEXUS_HOST = 'nexus:8081'
         SONAR_HOST = 'sonarqube:9000'
     }
@@ -20,7 +22,6 @@ pipeline {
             stage('create WAR-file') {
                 steps {
                     sh 'mvn clean package -DskipTests'
-                    sh 'ls -al target'
                 }
             }
             stage('deploy to nexus') {
