@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        NEXUS_HOST = 'nexus:8081'
-        
         stages {
             stage('Testen und Kompilieren') {
                 steps {
@@ -15,11 +12,10 @@ pipeline {
                     sh 'ls -al target'
                 }
             }
-            stage('deploy to nexus') {
+            stage('package to nexus') {
                 steps {
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
-                }configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
-                        sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS clean deploy'
+                        sh 'mvn package'
                     }
                 }
             }
