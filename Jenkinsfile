@@ -1,17 +1,26 @@
 pipeline {
-    agent any
-        stages {
-            stage("WAR-File erstellen") {
-                steps {
-                        sh 'mvn clean package'
-                }
+    agent any 
+    stages {
+        stage('SCM checkout') {
+            steps {
+                echo 'git SCM checkout'
             }
-        
-            stage("deploy War-file to tomcat") {
-                steps {
-                    ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
-             }
-         }
+        }
+        stage('unit test') {
+            steps {
+                echo 'mvn test'
+            }
+        }
+
+        stage('war-file package') {
+            steps {
+                echo 'war-file creation'
+            }
+        }
+        stage('Deploy via Ansible') {
+            steps {
+                echo 'Run ansible.yml'
+            }
+        }
     }
 }
-    
