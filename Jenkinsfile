@@ -4,16 +4,11 @@ pipeline {
         NEXUS_HOST = 'nexus:8081'
     }
     stages {
-        stage('Build') {
-            steps {
-                        sh 'build'                
-            }
-        }
         stage('Deploy to Nexus') {
             steps {
             withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
             configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {        
-                        sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS clean deploy -DskipTests -DdeployOnly'
+                        sh 'mvn $MAVEN_GLOBAL_SETTINGS clean deploy -DskipTests -DdeployOnly'
                     }
                 }
             }
