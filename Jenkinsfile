@@ -14,8 +14,8 @@ pipeline {
             }
             stage('package and deploy to nexus') {
                 steps {
-                    withCredentials([usernamePassword (credetnialsID: 'nexus-token', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh 'mvn deploy -s settings.xml'
+                    withCredentials([usernamePassword (credetnialsID: 'nexus', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        sh 'mvn deploy'
                     }
                 }
             }
