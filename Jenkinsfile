@@ -12,7 +12,8 @@ pipeline {
             }
             stage('verify with Sonarqube') {
                 steps {
-                    sh 'mvn verify sonar:sonar'
+                    configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
+                        sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS verify sonar:sonar'
                 }
             }
             stage('create WAR-file') {
