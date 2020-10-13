@@ -26,12 +26,8 @@ pipeline {
                         sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS deploy'
                        } 
                     }
-                }
-            }
             stage("deploy War-file to tomcat") {
                 steps {
                     ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
             }
         }
-    }
-    }
