@@ -68,7 +68,7 @@
 	</dependencies>
 
 	<build>
-	<<finalName>gryns_webblog</finalName>
+	<finalName>gryns_webblog</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
