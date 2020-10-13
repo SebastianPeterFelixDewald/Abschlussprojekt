@@ -4,9 +4,16 @@ pipeline {
         NEXUS_HOST = 'nexus:8081'
     }
     stages {
+        stage('Testen und Kompilieren') {
+            steps {
+                        sh 'mvn test' 
+
+                }
+
+            }
         stage("WAR-File erstellen") {
             steps {
-                        sh 'mvn clean package'
+                        sh 'mvn clean package -DskipTests'
                 }
             }
         stage("deploy War-file to tomcat") {
