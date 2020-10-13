@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    environment {
+        NEXUS_HOST = 'nexus:8081'}
         stages {
             stage('Testen und Kompilieren') {
                 steps {
@@ -34,4 +36,4 @@ pipeline {
             }
         }
     }
-}
+    }
