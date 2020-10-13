@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        NEXUS_HOST: 'nexus:8081'
-        SONAR_HOST: 'sonarqube:9000'
+        NEXUS_HOST = 'nexus:8081'
+        SONAR_HOST = 'sonarqube:9000'
     }
         stages {
             stage('Testen und Kompilieren') {
