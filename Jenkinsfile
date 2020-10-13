@@ -5,12 +5,17 @@ pipeline {
         SONAR_HOST = 'sonarqube:9000'
     }
         stages {
-            stage('Testen und Kompilieren') {
+            stage('test & compile') {
                 steps {
                     sh 'mvn test' 
                 }
             }
-            stage('WAR-File erstellen') {
+            stage('verify with Sonarqube') {
+                steps {
+                    sh 'mvn verify sonar:sonar'
+                }
+            }
+            stage('create WAR-file') {
                 steps {
                     sh 'mvn clean package -DskipTests'
                     sh 'ls -al target'
