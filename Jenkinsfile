@@ -12,10 +12,12 @@ pipeline {
                     sh 'ls -al target'
                 }
             }
-            stage('package to nexus') {
+            stage('deploy to nexus') {
                 steps {
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh 'mvn package'
+                    configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
+                        sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS deploy'
+                       } 
                     }
                 }
             }
