@@ -2,8 +2,8 @@
   hosts: all
   connection: docker
   tasks:
-  - name: Copy WAR-file from Jenkins to tomcat
+  - name: Copy WAR-file from Nexus to tomcat
     copy:
-      src: /var/jenkins_home/workspace/miniprojekt/target/spring-boot-webblog-0.0.1-SNAPSHOT.war
+      src: spring-boot-webblog-0.0.1-SNAPSHOT.war
       dest: /usr/local/tomcat/webapps
       mode: '0644'
