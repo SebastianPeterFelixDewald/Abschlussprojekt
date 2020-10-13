@@ -4,7 +4,7 @@ pipeline {
         NEXUS_HOST = 'nexus:8081'
     }
     stages {
-        stage('Testen und Kompilieren') {
+        stage('Testen & Kompilieren') {
             steps {
                         sh 'mvn test' 
 
