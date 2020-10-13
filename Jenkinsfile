@@ -25,16 +25,10 @@ pipeline {
             steps {
             withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
             configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
-                     sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS clean deploy'      
+                     sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS clean deploy -DskipTests'      
                     }
                 }
             }
         }
-        stage('Deploy War File to Local Tomcat') {
-            steps {
-                ansiblePlaybook inventory: 'inventory', colorized: true, installation: 'ansible2', playbook: 'deploy.yml', disableHostKeyChecking: true
-                ansiblePlaybook inventory: 'inventory', colorized: true, installation: 'ansible2', playbook: 'remove.yml', disableHostKeyChecking: true
-            }
-        }
-        }
     }
+}
