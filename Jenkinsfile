@@ -10,7 +10,6 @@ pipeline {
                     sh 'docker-compose up -d --build' 
                 }
             }
-        stages {
             stage('Testen und Kompilieren') {
                 steps {
                     sh 'mvn clean test' 
@@ -43,12 +42,11 @@ pipeline {
                     ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
             }
         }
-        stages {
             stage('Docker-compose down') {
-                steps 
-                sleep (300){
+                steps {
+                sleep (300)
                     sh 'docker-compose down' 
                 }
             }
-                }
-            }
+        }
+    }
