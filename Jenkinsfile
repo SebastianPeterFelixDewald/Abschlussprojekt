@@ -40,11 +40,6 @@ pipeline {
             }
 
             stage('deploy War-file to tomcat') {
-                agent {
-                    docker {
-                        args '-v /var/run/docker.sock:/var/run/docker.sock'
-                    }
-                }
                 steps {
                     //ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
                   //  withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
