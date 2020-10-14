@@ -3,7 +3,13 @@ pipeline {
     environment {
         NEXUS_HOST = 'nexus:8081'
         SONAR_HOST = 'sonarqube:9000'
-    }
+               }
+        stages {
+            stage('Docker-compose-up') {
+                steps {
+                    sh 'docker-compose up -d --build' 
+                }
+            }
         stages {
             stage('Testen und Kompilieren') {
                 steps {
@@ -37,6 +43,12 @@ pipeline {
                     ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
             }
         }
+        stages {
+            stage('Docker-compose down') {
+                steps 
+                sleep (300){
+                    sh 'docker-compose down' 
                 }
             }
-        
+                }
+            }
