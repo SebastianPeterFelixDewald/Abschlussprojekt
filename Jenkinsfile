@@ -45,6 +45,7 @@ pipeline {
                     configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
                         sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS tomcat7:redeploy'
                     }
+                }
             }
         }
             stage('Docker-compose down') {
