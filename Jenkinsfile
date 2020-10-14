@@ -40,6 +40,12 @@ pipeline {
             }
 
             stage('deploy War-file to tomcat') {
+                agent {
+                    docker {
+                        image 'docker:latest'
+                        args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    }
+                }
                 steps {
                     //ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
                   //  withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
@@ -52,7 +58,7 @@ pipeline {
             }
             stage('stop docker-compose') {
                 steps {
-                    sleep(300)
+                    sleep()
                     sh 'docker-compose down'
                 }
             }
