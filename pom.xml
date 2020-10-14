@@ -14,12 +14,12 @@
 	<name>gryns_webblog</name>
 	<description>Spring Boot Webblog Project</description>
 
-	<distributionManagement>
-	   <snapshotRepository>
-	      <id>nexus-snapshots</id>
-	      <url>http://nexus:8081/nexus/content/repositories/snapshots</url>
-	   </snapshotRepository>
-	</distributionManagement>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://nexus:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 	<properties>
 		<java.version>1.8</java.version>
