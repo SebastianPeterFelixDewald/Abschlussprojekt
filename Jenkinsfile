@@ -45,8 +45,6 @@ pipeline {
                    // configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
                        // sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS tomcat7:redeploy'
                          sh 'curl -i -X PUT -u tomcat:s3cret http://tomcat:8080/manager/text/deploy?path=/gryns_webblog --upload-file gryns_webblog.war'
-                    }
-                }
             }
         }
             stage('Docker-compose down') {
