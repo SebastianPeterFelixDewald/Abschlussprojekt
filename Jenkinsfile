@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     environment {
-        
+        TOMCAT_HOST = 'tomcat:8080'
         NEXUS_HOST = 'nexus:8081'
         SONAR_HOST = 'sonarqube:9000'
     }
