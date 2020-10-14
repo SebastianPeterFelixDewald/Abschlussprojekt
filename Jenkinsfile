@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    environment {
-        //NEXUS_HOST = 'nexus:8081'
-        //SONAR_HOST = 'sonarqube:9000'
-        //TOMCAT_HOST = 'tomcat:8080'
-        }
+    /*environment {
+        NEXUS_HOST = 'nexus:8081'
+        SONAR_HOST = 'sonarqube:9000'
+        TOMCAT_HOST = 'tomcat:8080'
+        }*/
         stages {
             /*stage ('start docker-compose') {
                 steps {
