@@ -46,7 +46,7 @@ pipeline {
         }
             stage('stop docker-compose') {
                 steps {
-                    sleep (300)
+                    sleep (900)
                     sh 'docker-compose down'
                 }
             }
