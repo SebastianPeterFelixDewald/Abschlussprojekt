@@ -40,7 +40,11 @@ pipeline {
                     }
             stage("deploy War-file to tomcat") {
                 steps {
-                    ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
+                    //ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
+                    withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
+                        sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS tomcat7:redeploy'
+                    }
             }
         }
             stage('Docker-compose down') {
