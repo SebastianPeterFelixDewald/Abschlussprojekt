@@ -1,4 +1,4 @@
-version: "2.1"
+version: '2.1'
 
 networks:
   tools:
@@ -6,61 +6,86 @@ networks:
       name: tools
 
 volumes:
-  jenkins_home:
-    name: jenkins_home
-  nexus-data:
-    name: nexus-data
-
+  prometheus_data: {}
+  grafana_data: {}
 
 services:
-  jenkins:
-    build: jenkins
-    container_name: jenkins
-    ports:
-      - 8081:8080
+  prometheus:
+    build: ./prometheus
+    container_name: prometheus
     volumes:
-      - jenkins_home:/var/jenkins_home
-      - /usr/bin/docker:/usr/bin/docker
-      - /var/run/docker.sock:/var/run/docker.sock
-    group_add:
-      - 133
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    ports:
+      - 8088:9090
     networks:
       - tools
 
-  tomcat:
-    build: tomcat
-    container_name: tomcat
-    ports:
-      - 8082:8080
-    networks:
-      - tools
-
-  nexus:
-    image: sonatype/nexus3:latest
-    container_name: nexus
-    ports:
-      - 8083:8081
-    networks:
-      - tools
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
     volumes:
-      - nexus-data:/nexus-data
-
-  sonarqube:
-    image: sonarqube:latest
-    container_name: sonarqube
-    ports:
-      - 8084:9000
-    networks:
-      - tools
-
-  mysql:
-    image: mysql:latest
-    container_name: mysql
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_USER=root
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
     ports:
-    - 8085:3306
+      - 8089:3000
     networks:
       - tools
 
+  fluentd:
+    build: ./fluentd
+    container_name: fluentd
+    links:
+      - "elasticsearch"
+    ports:
+      - "8090:24224"
+      - "8090:24224/udp"
+    networks:
+      - tools
+
+  elasticsearch:
+    image: elasticsearch:7.9.2
+    container_name: elasticsearch
+    environment:
+      - "discovery.type=single-node"
+    expose:
+      - "9200"
+    ports:
+      - "8087:9200"
+    networks:
+      - tools
+
+  kibana:
+    build: ./kibana
+    container_name: kibana
+    links:
+      - "elasticsearch"
+    ports:
+      - "8086:5601"
+    networks:
+      - tools
+  
+  elasticsearch_exporter:
+    image: justwatch/elasticsearch_exporter:1.1.0
+    container_name: es-exporter-container
+    command:
+     - '--es.uri=http://elasticsearch-service:9200'
+    ports:
+     - "8091:9114"
+    links:
+      - "elasticsearch"
+    restart: unless-stopped
+    networks:
+      - tools

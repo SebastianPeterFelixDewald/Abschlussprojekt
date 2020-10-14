@@ -5,6 +5,11 @@ pipeline {
         SONAR_HOST = 'sonarqube:9000'
     }
         stages {
+            stage ('start docker-compose') {
+                steps {
+                    sh 'docker-compose up -d --build'
+                }
+            }
             stage('test & compile') {
                 steps {
                     sh 'mvn test' 
@@ -33,11 +38,16 @@ pipeline {
                 }
             }
 
-            stage("deploy War-file to tomcat") {
+            stage('deploy War-file to tomcat') {
                 steps {
                     ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
+                }
             }
-        }
+            stage('stop docker-compose') {
+                steps {
+                    sh 'docker-compose down'
+                }
+            }
     }
 }
     
