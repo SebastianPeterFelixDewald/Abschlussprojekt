@@ -42,12 +42,12 @@ pipeline {
             stage('deploy War-file to tomcat') {
                 steps {
                     //ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
-                  //  withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
-                    //configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
-                      //  sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS tomcat7:redeploy'
-                      sh 'curl -i -X PUT -u tomcat:s3cret http://tomcat:8080/manager/text/deploy?path=/gryns_webblog --upload-file target/gryns_webblog.war'
-                      //  }
-                    //}
+                    withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    configFileProvider([configFile(fileId: 'default', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
+                      sh 'mvn -gs $MAVEN_GLOBAL_SETTINGS tomcat7:redeploy -DskipTests'
+                      //sh 'curl -i -X PUT -u tomcat:s3cret http://tomcat:8080/manager/text/deploy?path=/gryns_webblog --upload-file target/gryns_webblog.war'
+                        }
+                    }
                 }
             }
             stage('stop docker-compose') {
@@ -58,4 +58,3 @@ pipeline {
             }
     }
 }
-    
