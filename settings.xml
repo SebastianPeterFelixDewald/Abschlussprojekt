@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+
+  <servers>
+    <server>
+      <id>nexus-snapshots</id>
+      <username>${NEXUS_USER}</username>
+      <password>${NEXUS_PASSWORD}</password>
+    </server>
+    <server>
+      <id>nexus-releases</id>
+      <username>${NEXUS_USER}</username>
+      <password>${NEXUS_PASSWORD}</password>
+    </server>
+    <server>
+      <id>TomcatServer</id>
+      <username>${TOMCAT_USER}</username>
+      <password>${TOMCAT_PASSWORD}</password>
+    </server>
+  </servers>
+
+    <profiles>
+        <!-- Nexus Artifactory -->
+        <profile>
+            <id>nexus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <deployAtEnd>true</deployAtEnd>
+              <altDeploymentRepository>nexus-snapshots::default::http://nexus:8081/repository/maven-snapshots</altDeploymentRepository>
+              <altSnapshotDeploymentRepository>nexus-snapshots::default::http://nexus:8081/repository/maven-snapshots</altSnapshotDeploymentRepository>
+              <altReleaseDeploymentRepository>nexus-releases::default::http://nexus:8081/repository/maven-releases</altReleaseDeploymentRepository>
+            </properties>
+        </profile>
+ 
+		<!-- Nexus Artifactory Dependencies --> 
+		<profile>
+			<id>central</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+			<repositories>
+				<repository>
+					<id>snapshots</id>
+					<url>http://nexus:8081/repository/maven-snapshots</url>
+				</repository>
+				<repository>
+					<id>releases</id>
+					<url>http://nexus:8081/repository/maven-releases</url>
+				</repository>
+			</repositories>
+		</profile>
+		
+		<!-- SonarQube Server -->
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Optional URL to server. Default value is http://localhost:8084 -->
+              <sonar.host.url>http://sonarqube:9000</sonar.host.url>
+            </properties>
+        </profile>
+		
+
+    </profiles>
+
+    <activeProfiles>
+      <activeProfile>nexus</activeProfile>
+      <activeProfile>sonar</activeProfile>
+    </activeProfiles>
+  
+
+</settings>
